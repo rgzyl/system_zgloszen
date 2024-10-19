@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+
+# RewriteRule ^index\.php$ / [L,R=301]
+
+# Do usunięcie prefix  - '/login'
+
+RewriteRule ^status/index\.php$ /login/status/ [L,R=301]
+RewriteRule ^admin/index\.php$ /login/admin/ [L,R=301]
+RewriteRule ^404/index\.php$ /login/404/ [L,R=301]
+
+RewriteRule ^admin/utworz-konto/?$ /login/admin/register.php [L,QSA]
+RewriteRule ^admin/przywracanie-hasla/?$ /login/admin/reset_password.php [L,QSA]
+RewriteRule ^admin/zmiana-hasla/?$ /login/admin/reset_password_confirm.php [L,QSA]
+RewriteRule ^admin/2fa/?$ /login/admin/2fa.php [L,QSA]
+
+ErrorDocument 404 /login/404/
