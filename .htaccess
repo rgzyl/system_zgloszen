@@ -1,0 +1,22 @@
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^index\.php$ / [L,R=301]
+
+RewriteRule ^status/index\.php$ /status/ [L,R=301]
+RewriteRule ^admin/index\.php$ /admin/ [L,R=301]
+RewriteRule ^404/index\.php$ /404/ [L,R=301]
+RewriteRule ^kontakt/index\.php$ /kontakt/ [L,R=301]
+RewriteRule ^polityka-prywatnosci/index\.php$ /polityka-prywatnosci/ [L,R=301]
+
+RewriteRule ^admin/utworz-konto/?$ /admin/register.php [L,QSA]
+RewriteRule ^admin/przywracanie-hasla/?$ /admin/reset_password.php [L,QSA]
+RewriteRule ^admin/zmiana-hasla/?$ /admin/reset_password_confirm.php [L,QSA]
+RewriteRule ^admin/2fa/?$ /admin/2fa.php [L,QSA]
+
+ErrorDocument 404 /404/

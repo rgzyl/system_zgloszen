@@ -11,8 +11,27 @@
 	
 	$IdUser = $_SESSION["IdUser"];
 	$status = "";
-	date_default_timezone_set('Europe/Berlin');
-	$data = date('Y-m-d H:i:s');
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if (!verify_csrf_token(sanitize_input($_POST['csrf_token']))) {
+			die('Błąd CSRF. Proszę odświeżyć stronę i spróbować ponownie.');
+        }
+		
+		$nazwa = sanitize_input($_POST['nazwa']);
+		$id = sanitize_input($_POST['id']);
+
+		$stmt = $con->prepare("UPDATE str_zgloszenie SET stat = 1 WHERE IdZgloszenie = ?");
+		$stmt->bind_param("i", $id);
+
+		if ($stmt->execute()) {
+			header("Location: ?status=ok");
+		} else {
+			header("Location: ?status=error");
+		}
+
+		$stmt->close();
+	}
+	
 	if(isset($_GET['status'])){
 		if($_GET['status'] == "error"){
 			$status = 
@@ -115,7 +134,7 @@
 		$result = $stmt->get_result();
 		while ($row = $result->fetch_assoc()) {
 		?>
-			<form action="operacje/zgloszenie-delete.php?id=<?= htmlspecialchars($row['IdZgloszenie']); ?>" method="post">
+			<form method="post">
 				<input type="hidden" name="csrf_token" value="<?= generate_csrf_token(); ?>">
 				<input type="hidden" name="id" value="<?= htmlspecialchars($row['IdZgloszenie']); ?>">
 				

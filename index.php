@@ -47,12 +47,21 @@
             $uploadedFiles = $_FILES['photos'];
             $uploadedFileNames = [];
 
-			$stmt = $con->prepare("INSERT INTO str_zgloszenie (imie, nazwisko, adres, kod, IdWies, telefon, mail, opis, data, ip, stat) 
-								   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
-			$stmt->bind_param('sssssssss', $imie, $nazwisko, $adres, $kod, $IdWies, $telefon, $email, $opis, $data, $ip);
+			$stmt = $con->prepare("INSERT INTO str_zgloszenie (imie, nazwisko, adres, kod, IdWies, telefon, mail, opis, ip, stat) 
+								   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
 
-            $last_id = $stmt->insert_id;
-            $stmt->close();
+			if (!$stmt) {
+				throw new Exception("Błąd w przygotowaniu zapytania: " . $con->error);
+			}
+
+			$stmt->bind_param('sssssssss', $imie, $nazwisko, $adres, $kod, $IdWies, $telefon, $email, $opis, $ip);
+
+			if (!$stmt->execute()) {
+				throw new Exception("Błąd wykonania zapytania: " . $stmt->error);
+			}
+
+			$last_id = $stmt->insert_id;
+			$stmt->close();
 
             if (!empty($uploadedFiles['name'][0])) { 
                 $uploadDirectory = 'uploads/';
@@ -105,6 +114,8 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Zgłoś szkodę | <?= $website_name; ?></title>
+		<meta name="description" content="<?= $website_description; ?>">
+		<meta name="keywords" content="<?= $website_keywords; ?>">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 		<link href="assets/css/styles.css" rel="stylesheet">

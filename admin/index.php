@@ -60,7 +60,7 @@
                 $attempts = $row_attempts['attempt'];
                 $last_attempt_time = $row_attempts['data_attempt'];
 
-                if ($attempts >= 5 && strtotime($last_attempt_time) > strtotime('-3 hours')) {
+                if ($attempts >= 3 && strtotime($last_attempt_time) > strtotime('-3 hours')) {
                     $status = '<div class="error"><p>* Konto zablokowane na 3 godziny! Spróbuj ponownie później.</p></div>';
                 } else {
                     $stmt = $con->prepare("SELECT * FROM str_user WHERE username = ?");
@@ -95,7 +95,7 @@
                         $row_2fa = $result_2fa->fetch_array();
 
                         if (!empty($row_2fa['2fa_secret'])) {
-                            header("Location: 2fa.php");
+                            header("Location: 2fa");
                             exit();
                         } else {
                             $_SESSION['2fa_verified'] = true; 
@@ -163,7 +163,7 @@
 				<button type="submit" class="btn btn-primary">ZALOGUJ SIĘ</button>
 				<div class="status"><?php echo $status; ?></div>
 				<div class="form-footer">
-					<p>Nie masz konta? <a href="<?= $website_path; ?>admin/utworz-konto">Utwórz je teraz!</a></p>
+					<!--<p>Nie masz konta? <a href="<?= $website_path; ?>admin/utworz-konto">Utwórz je teraz!</a></p>-->
 					<p>Wróć do <a href="<?= $website_path; ?>">strony głównej</a></p>
 				</div>
 			</form>

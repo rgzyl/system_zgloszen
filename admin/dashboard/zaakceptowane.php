@@ -34,7 +34,10 @@
 				<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
 						<h1 class="h2">Zaakceptowane zgłoszenia</h1>
-						<a role="button" href="export.php" class="btn btn-blue">EXPORT</a>
+						<div>
+						<a role="button" href="export.php" class="btn btn-blue">MS EXCEL</a>
+						<a role="button" href="pdf.php" target="_blank" class="btn btn-blue">PDF</a>
+						</div>
 					</div>						
 
 					<div class="table-responsive">

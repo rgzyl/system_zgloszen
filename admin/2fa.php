@@ -61,16 +61,18 @@
         }
     }
 ?>
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pl">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Weryfikacja dwuetapowa | <?= $website_name; ?></title>
+		<title>Weryfikacja dwuetapowa | <?= $website_name; ?></title>
+		<meta name="description" content="">
+		<meta name="keywords" content="<?= $website_keywords; ?>">
+		<link rel="apple-touch-icon" href="../../assets/img/favicon.ico">
+		<link rel="icon" href="../../assets/img/favicon.ico">
+		<link rel="shortcut icon" href="../../assets/img/favicon.ico">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-		<link rel="apple-touch-icon" href="../assets/img/favicon.ico">
-		<link rel="icon" href="../assets/img/favicon.ico">
-		<link rel="shortcut icon" href="../assets/img/favicon.ico">
         <style>
 			@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 			
@@ -155,16 +157,16 @@
         </style>
     </head>
     <body>
-		<form action="" method="POST">
-		<div id="status"><?= $status; ?></div>
+		<form method="POST">
+		<input type="hidden" name="csrf_token" value="<?= generate_csrf_token(); ?>">
+		<div id="status"></div>
 		<div class="container main-container">
             <div class="text-container">
-                <div class="opt-title">Weryfikacja dwuetapowa (2FA)</div>
+                <div class="opt-title">Weryfikacja dwuetapowa (MFA)</div>
                 <div class="opt-subtitle">Wprowadź jednorazowy kod weryfikacyjny, aby uzyskać dostęp do swojego konta</div>
             </div>
             <div id="otp-input">
-				<input type="hidden" name="csrf_token" value="<?= generate_csrf_token(); ?>">
-                <input class="opt-number" name="number1" type="text" maxlength="1" autocomplete="off" pattern="\d*" autofocus required />
+                <input class="opt-number" name="number1" type="text" maxlength="1" autocomplete="on" pattern="\d*" required />
                 <input class="opt-number" name="number2" type="text" maxlength="1" autocomplete="off" pattern="\d*" required />
                 <input class="opt-number" name="number3" type="text" maxlength="1" autocomplete="off" pattern="\d*" required />
                 <input class="opt-number" name="number4" type="text" maxlength="1" autocomplete="off" pattern="\d*" required />

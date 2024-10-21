@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `str_config` (
 
 
 INSERT INTO `str_config` (`IdConfig`, `nazwa`, `opis`, `status`) VALUES
-(1, 'Opublikowana strona', 'Strona została opublikowana pomyślnie!', '1');
+(1, 'Tymczasowo zamknięte', 'Strona jest tymczasowo niedostępna. Zapraszamy wkrótce.', '3');
 
 
 DROP TABLE IF EXISTS `str_wies`;
@@ -112,8 +112,8 @@ CREATE TABLE IF NOT EXISTS `str_zgloszenie` (
   `telefon` varchar(12) COLLATE utf8_polish_ci DEFAULT NULL,
   `mail` varchar(100) COLLATE utf8_polish_ci DEFAULT NULL,
   `opis` text COLLATE utf8_polish_ci,
-  `data` datetime DEFAULT NULL,
+  `data` datetime DEFAULT CURRENT_TIMESTAMP,
   `ip` varchar(15) COLLATE utf8_polish_ci DEFAULT NULL,
   `stat` varchar(1) COLLATE utf8_polish_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`IdZgloszenie`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;

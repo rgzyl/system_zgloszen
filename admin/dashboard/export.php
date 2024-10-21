@@ -1,15 +1,12 @@
 <?php
-	require '../../vendor/autoload.php';
+	require('../../vendor/autoload.php');
+	require('../../config.php');
+	require('auth.php');
+	
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 	use PhpOffice\PhpSpreadsheet\Style\Border;
 	use PhpOffice\PhpSpreadsheet\Cell\DataType;
-	require '../../config.php';
-
-	header("X-Content-Type-Options: nosniff");
-	header("X-XSS-Protection: 1; mode=block");
-	header("X-Frame-Options: SAMEORIGIN");
-	header("Content-Security-Policy: default-src 'self';");
 
 	try {
 		mysqli_query($con, "SET @row_number = 0;");
@@ -35,14 +32,14 @@
 
 		$rowNumber = 2; 
 		while ($row = $result->fetch_assoc()) {
-			$sheet->setCellValueExplicit('A' . $rowNumber, $row['lp'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('B' . $rowNumber, $row['imie'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('C' . $rowNumber, $row['nazwisko'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('D' . $rowNumber, $row['adres'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('E' . $rowNumber, $row['kod'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('F' . $rowNumber, $row['nazwa'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('G' . $rowNumber, $row['telefon'], DataType::TYPE_STRING);
-			$sheet->setCellValueExplicit('H' . $rowNumber, $row['mail'], DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('A' . $rowNumber, htmlspecialchars($row['lp']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('B' . $rowNumber, htmlspecialchars($row['imie']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('C' . $rowNumber, htmlspecialchars($row['nazwisko']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('D' . $rowNumber, htmlspecialchars($row['adres']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('E' . $rowNumber, htmlspecialchars($row['kod']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('F' . $rowNumber, htmlspecialchars($row['nazwa']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('G' . $rowNumber, htmlspecialchars($row['telefon']), DataType::TYPE_STRING);
+			$sheet->setCellValueExplicit('H' . $rowNumber, htmlspecialchars($row['mail']), DataType::TYPE_STRING);
 
 			$sheet->getStyle('A' . $rowNumber . ':H' . $rowNumber)
 				->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);

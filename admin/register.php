@@ -10,8 +10,8 @@
 		exit();
 	}
 
-	//require("dashboard/auth.php");
-	//$IdUser = $_SESSION["IdUser"];
+	require("dashboard/auth.php");
+	$IdUser = $_SESSION["IdUser"];
 	
 	$status = "";
 	$ip = $_SERVER['REMOTE_ADDR'];
@@ -135,8 +135,8 @@
 				<button type="submit" class="btn btn-primary">ZAPISZ</button>
 				<div class="status"><?php echo $status; ?></div>
 				<div class="form-footer">
-					<p>Wróć do <a href="<?= $website_path; ?>admin/">panelu logowania</a></p>
-					<!--<p>Wróć do <a href="dashboard/konta.php">panelu administratora</a></p>-->
+					<!--<p>Wróć do <a href="<?= $website_path; ?>admin/">panelu logowania</a></p>-->
+					<p>Wróć do <a href="dashboard/konta.php">panelu administratora</a></p>
 				</div>
 			</form>
 		</div>

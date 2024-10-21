@@ -119,7 +119,7 @@
 					<?php echo "<div>".$status."</div>" ?>
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
 						<h1 class="h2">Konta użytkowników</h1>
-						<a href="../register.php" role="button" class="btn btn-blue">DODAJ</a>
+						<a href="../utworz-konto" role="button" class="btn btn-blue">DODAJ</a>
 					</div>
 					<form method="POST" action="">
 					<div class="modal fade" id="dodajModal" tabindex="-1" aria-labelledby="dodajModalLabel" aria-hidden="true">

@@ -12,6 +12,26 @@
 	$IdUser = $_SESSION["IdUser"];
 	$status = "";
 	$id = $_GET['id'];
+	
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if (!verify_csrf_token(sanitize_input($_POST['csrf_token']))) {
+			die('Błąd CSRF. Proszę odświeżyć stronę i spróbować ponownie.');
+        }
+		
+		$nazwa = sanitize_input($_POST['nazwa']);
+		$id = (int) $_GET['id'];
+
+		$stmt = $con->prepare("UPDATE str_zgloszenie SET stat = 1 WHERE IdZgloszenie = ?");
+		$stmt->bind_param("i", $id);
+
+		if ($stmt->execute()) {
+			header("Location: zgloszenia.php");
+		} else {
+			echo "Coś poszło nie tak!";
+		}
+
+		$stmt->close();
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -74,8 +94,8 @@
 										while ($rw = $result->fetch_assoc()) {
 								?>
 											<div class="col-md-4 mb-3">
-												<a data-fancybox="gallery" href="../uploads/<?= htmlspecialchars($rw['nazwa']); ?>">
-													<img src="../uploads/<?= htmlspecialchars($rw['nazwa']); ?>" class="img-fluid rounded shadow-sm" style="width:250px;" alt="Zdjęcie zgłoszenia" />
+												<a data-fancybox="gallery" href="../../uploads/<?= htmlspecialchars($rw['nazwa']); ?>">
+													<img src="../../uploads/<?= htmlspecialchars($rw['nazwa']); ?>" class="img-fluid rounded shadow-sm" style="width:250px;" alt="Zdjęcie zgłoszenia" />
 												</a>
 											</div>
 								<?php 
@@ -104,7 +124,7 @@
 
 					while ($row = $result->fetch_assoc()) {
 					?>
-							<form action="operacje/zgloszenie-delete.php?id=<?= htmlspecialchars($row['IdZgloszenie']); ?>" method="post">
+							<form method="post">
 								<input type="hidden" name="csrf_token" value="<?= generate_csrf_token(); ?>">
 								<div class="modal fade" id="checkModal<?= htmlspecialchars($row['IdZgloszenie']); ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= htmlspecialchars($row['IdZgloszenie']); ?>" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered">
